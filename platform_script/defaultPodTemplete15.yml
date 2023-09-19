@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-template
+spec:
+  nodeSelector:
+    scps-node: worker
+  initContainers:
+    - name: busybox
+      image: busybox:latest
+      volumeMounts:
+        - name: downloads
+          mountPath: /opt/app/
+        - name: flink-app-initial
+          mountPath: /scpsinitial/
+      command:
+        - /bin/sh
+        - -c
+        - "ls -al /scpsinitial/ && whoami && echo  /scpsinitial/initial.sh && /scpsinitial/initial.sh"
+  containers:
+    # Do not change the main container name
+    - name: flink-main-container
+      image: 10.2.4.16:5000/release/flink:1.15.2-sopei
+      volumeMounts:
+        - mountPath: /opt/app/
+          name: downloads
+        - name: flink-data
+          mountPath: /opt/appShare/
+  volumes:
+    - name: downloads
+      emptyDir: { }
+    - name: flink-app-initial
+      configMap:
+        name: flink-app-initial
+        defaultMode: 0777
+    - name: flink-data
+      persistentVolumeClaim:
+        claimName: flink-resource-volume

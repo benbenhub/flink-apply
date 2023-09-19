@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: chunjun
+spec:
+  containers:
+    # Do not change the main container name
+    # 万万不可修改此参数
+    - name: flink-main-container
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+      - name: flink-data
+        mountPath: /opt/appShare/
+  restartPolicy: Always
+  # serviceAccount: flink
+  # serviceAccountName: flink
+  volumes:
+  - name: flink-data
+    persistentVolumeClaim:
+      claimName: flink-resource-volume       
+  # nodeSelector:
+  #  scps-works: works       
