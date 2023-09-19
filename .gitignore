@@ -1,0 +1,7 @@
+scps.properties
+/logs/
+/ben-core/target/
+/build/
+/scps-lib/
+/.gradle/
+/.idea/

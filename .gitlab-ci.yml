@@ -1,0 +1,28 @@
+stages:
+  - build
+##############################################
+build-dev:
+  stage: build
+  script:
+    - echo 开始构建jar包
+    - mvn clean
+    - mvn package -pl scps-shaded -am
+    - echo 构建完成
+    - coscli cp scps-shaded/target/scps-shaded-1.0-RELEASE.jar cos://flink-checkpoint-1251517753/data/app/dev/scps-shaded-1.0-RELEASE.jar
+  tags:
+    - dev-runner
+  only:
+    - dev
+
+
+build-master:
+  stage: build
+  script:
+    - echo 开始构建jar包
+    - mvn clean package -pl scps-shaded -am -Dmaven.test.skip=true
+    - echo 构建完成
+    - coscli cp scps-shaded/target/scps-shaded-1.0-RELEASE.jar cos://flink-checkpoint-1251517753/data/app/master/scps-shaded-1.0-RELEASE.jar
+  tags:
+    - dev-runner
+  only:
+    - master
