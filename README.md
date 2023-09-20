@@ -62,15 +62,15 @@ public class Stream extends StreamApp {
 #### 调用
 ~~~
 
-flink run-application -t kubernetes-application -p $PARALIZE \
-    -c $MAIN_CLASS \
-    -Dkubernetes.cluster-id=$K8S_CLUSTER_NAME \
-    -Djobmanager.memory.process.size=$JB_MEM \
-    -Dtaskmanager.memory.process.size=$TM_MEM \
-    -Dkubernetes.pod-template-file=$POD_TEMPLATE_PATH \
-    -Drest.port=$PORT \
-    $APP_IMAGE \
-    $POD_TEMPLATE_OPTION \
-    $FLINK_OPTION \
-    local://$APP_PATH $APP_OPTION -flink_jobname $APP_NAME
+flink run-application -t kubernetes-application \
+    -p 1 \
+    -c com.*.App \
+    -Drest.port=59690 \
+    -Dkubernetes.cluster-id=batch-name \
+    -Djobmanager.memory.process.size=1024m  \
+    -Dtaskmanager.memory.process.size=4096m  \
+    -Dkubernetes.pod-template-file=defaultPodTemplete.yaml \
+    -Dkubernetes.container.image=image:v1 \
+    local:///opt/batch.jar -conf batch.properties -args 1003989321957234944
+
 ~~~
