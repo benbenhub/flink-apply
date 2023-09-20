@@ -32,7 +32,9 @@ public class Stream extends StreamApp {
     public Stream(String[] args, String jobName) {
         super(args, jobName);
     }
-    
+    public static void main(String[] args) throws Exception {
+        new Stream(args, "app name").start();
+    }
     @Override
     public void run(ExecutionEnvironment batchEnv) {
 
@@ -57,3 +59,18 @@ public class Stream extends StreamApp {
 }
 ~~~
 
+#### 调用
+~~~
+
+flink run-application -t kubernetes-application -p $PARALIZE \
+    -c $MAIN_CLASS \
+    -Dkubernetes.cluster-id=$K8S_CLUSTER_NAME \
+    -Djobmanager.memory.process.size=$JB_MEM \
+    -Dtaskmanager.memory.process.size=$TM_MEM \
+    -Dkubernetes.pod-template-file=$POD_TEMPLATE_PATH \
+    -Drest.port=$PORT \
+    $APP_IMAGE \
+    $POD_TEMPLATE_OPTION \
+    $FLINK_OPTION \
+    local://$APP_PATH $APP_OPTION -flink_jobname $APP_NAME
+~~~
