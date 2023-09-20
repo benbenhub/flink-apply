@@ -60,7 +60,7 @@ public class Stream extends StreamApp {
 }
 ~~~
 
-### 调用
+
 ~~~
 
 flink run-application -t kubernetes-application \
