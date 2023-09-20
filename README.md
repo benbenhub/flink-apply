@@ -1,9 +1,10 @@
 # flink-apply
+## 简介
+对Flink的连接器进行二次封装，减少学习Flink的成本，可以使用Flink进行快速的数据开发。
 
+## 使用教程
 
-### 使用教程
-
-#### 批次程序
+### 批次程序
 
 ~~~
 public class Batch extends BatchApp {
@@ -25,7 +26,7 @@ public class Batch extends BatchApp {
 }
 ~~~
 
-#### 流式程序
+### 流式程序
 ~~~
 public class Stream extends StreamApp {
 
@@ -59,7 +60,7 @@ public class Stream extends StreamApp {
 }
 ~~~
 
-#### 调用
+### 调用
 ~~~
 
 flink run-application -t kubernetes-application \
