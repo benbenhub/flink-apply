@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vin
+spec:
+  containers:
+    # Do not change the main container name
+    # 万万不可修改此参数
+    - name: flink-main-container
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+      - name: flink-data
+        mountPath: /opt/appShare/
+      - name: flink-lib
+        mountPath: /opt/flink/lib/ext-lib
+  restartPolicy: Always
+  # serviceAccount: flink
+  # serviceAccountName: flink
+  volumes:
+  - name: flink-data
+    persistentVolumeClaim:
+      claimName: flink-resource-volume       
+  - name: flink-lib
+    persistentVolumeClaim:
+      claimName: flink-lib-volume
+  # nodeSelector:
+  #  scps-works: works       

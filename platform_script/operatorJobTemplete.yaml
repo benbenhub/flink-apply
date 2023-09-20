@@ -1,0 +1,60 @@
+apiVersion: flink.apache.org/v1beta1
+kind: FlinkDeployment
+metadata:
+  name: operator-job-naem
+spec:
+  image: 10.2.4.16:5000/release/flink:1.15.2-sopei
+  flinkVersion: v1_15
+  flinkConfiguration:
+    taskmanager.numberOfTaskSlots: "2"
+  serviceAccount: flink
+  podTemplate:
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: operator-job-naem
+    spec:
+      containers:
+        # Do not change the main container name
+        - name: flink-main-container
+          volumeMounts:
+            - mountPath: /opt/app/
+              name: downloads
+      volumes:
+        - name: downloads
+          emptyDir: { }
+        - name: flink-app-initial
+          configMap:
+            name: flink-app-initial
+            defaultMode: 0777
+  jobManager:
+    resource:
+      memory: "1024m"
+      cpu: 1
+    podTemplate:
+      apiVersion: v1
+      kind: Pod
+      metadata:
+        name: job-manager-pod-template
+      spec:
+        initContainers:
+          - name: busybox
+            image: busybox:latest
+            volumeMounts:
+              - name: downloads
+                mountPath: /opt/app/
+              - name: flink-app-initial
+                mountPath: /scpsinitial/
+            command:
+              - /bin/sh
+              - -c
+              - "ls -al /scpsinitial/ && whoami && echo  /scpsinitial/initial.sh && /scpsinitial/initial.sh"
+  taskManager:
+    resource:
+      memory: "2048m"
+      cpu: 1
+  job:
+    jarURI: local:///opt/app/scps-shaded-1.0-RELEASE.jar
+    entryClass: com.sopei.cal.class
+    parallelism: 2
+    args: ["--conf","/opt/app/appconf/1111"]
