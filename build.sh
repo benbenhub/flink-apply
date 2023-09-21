@@ -12,7 +12,7 @@ mv scps-vin/target/*.jar scps-lib/
 echo 打包docker镜像
 sudo docker build -t 10.43.61.207:5000/scps-flink-1.13.6:dev .
 echo 登录镜像仓库
-sudo docker login 10.43.61.207:5000 -u admin -p sopei2021
+sudo docker login 10.43.61.207:5000 -u admin -p 123456
 echo 登录完成
 sudo docker push 10.43.61.207:5000/scps-flink-1.13.6:dev
 echo 上传完成
