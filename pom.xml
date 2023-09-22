@@ -321,36 +321,4 @@
 <!--            </pluginRepositories>-->
 <!--        </profile>-->
 
-
-<!--        <profile>-->
-<!--            <id>private-maven</id>-->
-<!--            <repositories>-->
-<!--                <repository>-->
-<!--                    <id>releases</id>-->
-<!--                    <name>maven-nexus</name>-->
-<!--                    <url>http://114.132.226.171:8081/repository/maven-public/</url>-->
-<!--                    <releases>-->
-<!--                        <enabled>true</enabled>-->
-<!--                    </releases>-->
-<!--                    <snapshots>-->
-<!--                        <enabled>true</enabled>-->
-<!--                    </snapshots>-->
-<!--                </repository>-->
-<!--            </repositories>-->
-
-<!--            <distributionManagement>-->
-<!--                <repository>-->
-<!--                    <id>releases</id>-->
-<!--                    <name>Releases</name>-->
-<!--                    <url>http://114.132.226.171:8081/repository/maven-releases/</url>-->
-<!--                </repository>-->
-<!--                <snapshotRepository>-->
-<!--                    <id>snapshots</id>-->
-<!--                    <name>Snapshot</name>-->
-<!--                    <url>http://114.132.226.171:8081/repository/maven-snapshots/</url>-->
-<!--                </snapshotRepository>-->
-<!--            </distributionManagement>-->
-<!--        </profile>-->
-<!--    </profiles>-->
-
 </project>
