@@ -16,11 +16,11 @@ public class Batch extends BatchApp {
     @Override
     public void run(ExecutionEnvironment batchEnv) {
 
-        source().jdbcSource(JdbcConnectionType.clickhouse, "sql");
+        DataSet<Row> source = source().jdbcSource(JdbcConnectionType.clickhouse, "sql");
         ...
         ...
         ...
-        sink().elasticsearchSink(sz, "");
+        sink().elasticsearchSink(source, "");
        
     }
 }
@@ -55,7 +55,7 @@ public class Stream extends StreamApp {
         ...
         ...
         ...
-        sink().elasticsearchSink(sinkData, new ElasticsearchSink(log));
+        sink().elasticsearchSink(source, new ElasticsearchSink(log));
     }
 }
 ~~~
